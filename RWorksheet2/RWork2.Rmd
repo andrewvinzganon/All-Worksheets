@@ -1,0 +1,177 @@
+---
+title: "RWorksheet_Ganon#2.Rmd"
+author: "Ganon, Andrew Vinz C."
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+1.
+```{r}
+x <- -5:5
+x
+
+#1b 
+x <- 1:7
+x
+```
+
+2.
+```{r}
+seq(1,3,by = 0.2)
+```
+
+3. 
+```{r}
+worker <- c(34, 28, 22, 36, 27, 18, 52, 39, 42, 29, 35, 31, 27,
+22, 37, 34, 19, 20, 57, 49, 50, 37, 46, 25, 17, 37, 43, 53, 41, 51, 35,
+24,33, 41, 53, 40, 18, 44, 38, 41, 48, 27, 39, 19, 30, 61, 54, 58, 26,
+18)
+
+worker[3]
+
+worker[c(2,4)]
+
+worker[-c(4,12)]
+```
+
+4. 
+```{r}
+names <- c("first"=3, "second"=0, "third"=9)
+#b. 
+names
+names[c(1,3)]
+
+
+```
+The output displayed first at the top and its number on the bottom.
+
+5.
+```{r}
+x <- seq(-3, 2)
+x[2] <- 0
+#b.
+x
+```
+6.
+```{r}
+
+months <- c("Jan", "Feb", "March", "April", "May", "June")
+Php <- c(52.50, 57.25, 60.00, 65.00, 74.25, 54.00)
+Liter <- c(25, 30, 40, 50, 10, 45)
+
+dfuel <- data.frame(months,Php,Liter)
+dfuel
+
+# b. expenditure
+weighted.mean(Liter,Php)
+
+```
+
+
+7.
+```{r}
+# a.
+data <- c(length(rivers), sum(rivers), mean(rivers), median(rivers), var(rivers),
+sd(rivers), min(rivers), max(rivers))
+
+# b. [1]    141.0000  83357.0000    591.1844    425.0000 243908.4086
+# 493.8708    135.0000   3710.0000
+
+#c.
+data
+```
+
+8. 
+```{r}
+ PowerRanking <- 1:25
+  Celebrities <- c("Tom Cruise", "Rolling Stones", "Oprah Winfrey", "U2", "Tiger Woods",
+          "Steven Spielherg", "Howard Stern", "50 Cent", "Cast of the Sopranos",
+          "Dan Brown", "Bruce Springsteen", "Donald Trump", "Muhammad Ali",
+          "Paul McCartney","George Lucas","Elton John","David Letterman","Phil Mickelson",
+          "J.K Rowling","Bradd Pitt","Peter Jackson","Dr. Phil McGraw",
+          "Jay Lenon","Celine Dion","Kobe Bryant")
+  Pay <- c(67,90,225,110,90,332,302,41,52,88,55,44,55,40,233,34,40,47,75,25,39,45,32,40,31)
+  
+  Ranking <- data.frame(PowerRanking, Celebrities, Pay)
+  #a. 
+  Ranking
+  
+  #b. 
+  PowerRanking[19] <- 15
+  Pay[19] <- 90
+  
+  #c.
+  df <- data.frame(PowerRanking, Celebrities, Pay)
+  write.csv(df, "PowerRanking.csv")
+  
+  df_imported <- read.csv("PowerRanking.csv")
+  ranks <- df[10:20, ]
+  save(ranks, file = "Ranks.RData")
+  
+```
+
+9.
+```{r}
+#a.
+library("openxlsx")
+library("readxl")
+vienna <- read_xlsx ("/cloud/project/hotels-vienna.xlsx")
+
+#b.
+dim(vienna)
+
+#c.
+column <- vienna[,c(1,6,7,22,24)]
+column
+
+#d.
+save(column, file ="/cloud/project/new.RData")
+
+#e
+load("/cloud/project/new.RData")
+
+head(column, 6)
+tail(column, 6)
+
+```
+10. 
+
+```{r}
+veggies <- c("Eggplant","Tomato","Carrots","Broccoli","Lettuce","Pumpkin","Cabbage","Spinach","Potato","Malunggay")
+
+veggies
+
+#b. 
+veggies_1 <- c(veggies,"Potato","Onion")
+veggies_1
+
+#c.
+veggies_2 <- c(veggies_1[1:5],"Radish","Celery","Ginger","Garlic" )
+veggies_2
+
+length(veggies_2)
+
+#d
+remove_veggies <- veggies_1[-c(5,10,15)]
+remove_veggies   
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
