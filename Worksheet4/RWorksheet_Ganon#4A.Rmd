@@ -1,0 +1,72 @@
+---
+title: "RWorksheet_Ganon#4a"
+author: "Ganon, Andrew Vinz C."
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r}
+#1 
+Datar <- read.csv("HouseData.csv")
+
+#a. the data shows the different shoe sizes, height and the gender of the people in the household.
+
+#b. 
+male <- subset(Datar, Gender == "M" & Shoe.size&Height)
+male
+
+female <- subset(Datar, Gender == "F" & Shoe.size&Height)
+female
+```
+#c
+mean1 <- mean(Datar$Shoe.size)
+mean1
+mean2 <- mean(Datar$Height)
+mean2
+
+#d
+yes there is a relationship between the size of the male and the female shoe size and height.
+
+#2.
+
+```{r}
+Months <- c("March", "April" ,"January" ,"November" ,"January", "September","October","September","November","August","January","November","November","February","May","August","July","December","August","August","September","November","February","April")
+
+factor_monthsvector <- factor(Months)
+factor_monthsvector
+```
+#3.
+```{r}
+Summation <-summary(Months)
+Summation
+Summation2 <-summary(factor_monthsvector)
+Summation2
+```
+
+#4.
+```{r}
+List <- c("East", "West", "North",1,4,3)
+
+factor_data <- matrix(List,nrow=3,ncol=2)
+factor_data
+```
+
+```{r}
+#4.1
+colnames(factor_data) <- c("Direction", "Frequency")
+factor_data
+```
+
+#5. a
+```{r}
+setwd("/cloud/project/Worksheet4")
+Strats <- read.table("import_march.csv", header= TRUE, sep = ",")
+Strats
+```
+#5 b
+```{r}
+str("import_march")
+```
+
+
+
