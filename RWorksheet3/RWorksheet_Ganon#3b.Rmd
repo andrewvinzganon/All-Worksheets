@@ -1,0 +1,101 @@
+---
+title: "RWorksheet_#3b"
+author: "Ganon, Andrew Vinz C."
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+1.
+```{r}
+Respondents <- seq(20)
+Sex <- c(2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2)
+Fathers_Occupation <- c(1, 3, 3, 3, 1, 2, 3, 1, 1, 1, 3, 2, 1, 3, 3, 1, 3, 1, 2, 1)
+Persons <- c(5, 7, 3, 8, 5, 9, 6, 7, 8, 4, 7, 5, 4, 7, 8, 8, 3, 11, 7, 6)
+Siblings <- c(6, 4, 4, 1, 2, 1, 5, 3, 1, 2, 3, 2, 5, 5, 2, 1, 2, 5, 3, 2)
+Types <- c(1, 2, 3, 1, 1, 3, 3, 1, 2, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 2)
+a <- data.frame(Respondents, Sex, Fathers_Occupation, Persons, Siblings, Types)
+a
+
+#b. the data simply has a list of respondents with their sex, occupation of their father, number of person in their houses, siblings at school, and type of their houses. Also there is an existing legend below the table.
+
+#c
+mean(Siblings)
+# no, 2.95
+
+#d 
+a[1:2, ]
+#extract
+a[c(1,3),c(1,3)]
+
+#e 
+a[c(3, 5),c(2,4)]
+
+#f
+types_houses <- c(a$Types)
+types_houses
+```
+
+
+```{r}
+#g 
+males <- a$Respondents[a$Sex ==1 & a$Fathers_Occupation ==1]
+print(males)
+
+#h.)
+h <- a$Respondents[a$Sex == 2 & a$Siblings >= 5]
+h1 <- paste("Row: ", h)
+h1
+```
+
+```{r}
+#2. 
+#a.) 
+dataframe = data.frame(Ints=integer(),
+          Doubles=double(),
+          Characters=character(),
+          Logicals=logical(),
+          Factors=factor(),
+          stringsAsFactors=FALSE)
+print("Structure of the empty dataframe: ")
+print(str(dataframe))
+
+#The Ints column is for whole numbers, Doubles for numbers with decimals, Characters for text, and Factors for categories. We set stringsAsFactors = FALSE to keep text as text instead of automatically turning it into categories.
+```
+
+```{r}
+#3. 
+Rdata <- read.csv("HouseholdData.csv")
+```
+
+#b. 
+```{r}
+Rdata$Sex <- factor(Rdata$Sex, levels = c("Male", "Female"), labels = c(1,2))
+Rdata
+```
+#c.
+```{r}
+Rdata$Types.of.Houses <- factor(Rdata$Types.of.Houses, levels = c("Wood", "Congrete", "Semi-congrete"), labels = c(1,2,3))
+Rdata
+```
+#d.
+```{r}
+Rdata$Father.s.Occupation <- factor(Rdata$Father.s.Occupation, levels = c(1,2,3), labels = c("Farmer", "Driver", "Others"))
+Rdata
+```
+#e.
+```{r}
+FemDrive <- subset(Rdata, Sex == 2 & Father.s.Occupation =="Driver")
+FemDrive
+```
+#f.
+```{r}
+greater <- subset(Rdata, Respondents & Siblings.at.School >= 5)
+greater
+```
+#4. Interpret the graph.
+# The graph shows that negative tweets are most frequent, followed by neutral and positive tweets, from July 14 to 21, 2020.
+
