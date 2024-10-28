@@ -68,5 +68,89 @@ Strats
 str("import_march")
 ```
 
+6. a.
+```{r}
+selection <- readline(prompt="Enter Number:")
+
+if(selection <= 50){
+  selection
+  if (selection == 20){
+    print("TRUE")
+  }else{
+  print(selection)
+  }
+}
+```
+
+
+7.
+
+```{r}
+snackPrice<-readline(prompt = "Enter Amount: ")
+if (snackPrice == 50){
+  print("The minimum bill is : 100")
+}else if(snackPrice == 100){
+  print("The minimum bill is : 100")
+}else if(snackPrice == 200){
+  print("The minimum bill is : 200")
+}else if(snackPrice == 500){
+  print("The minimum bill is : 500")
+}else if(snackPrice == 1000){
+  print("The minimum bill is : 1000")
+}else{
+  print("The number is not divisible by 50")
+}
+```
+
+8. 
+```{r}
+Name <- c("Annie","Thea","Steve", "Hanna")
+Grade1 <- c(85,65,75,95)
+Grade2 <- c(65,75,55,75)
+Grade3 <- c(85,90,80,100)
+Grade4 <- c(100,90,85,90)
+
+student_data <-data.frame (Name,Grade1,Grade2,Grade3,Grade4)
+student_data
+```
+
+#b.
+```{r}
+for (i in 1:nrow(student_data)) {
+  avg_score <- (student_data[i, "Grade1"] + student_data[i, "Grade2"] + student_data[i, "Grade3"] + student_data[i, "Grade4"]) / 4
+  if (avg_score > 90) {
+    cat(sprintf("%s's average grade this semester is %.2f. ", student_data[i, "Name"], avg_score))
+  }
+}
+```
+
+#c
+```{r}
+test_averages <- colMeans(student_data[2:5])
+
+# Check for tests with average less than 80
+for (j in 1:length(test_averages)) {
+  if (test_averages[j] < 80) {
+    cat(sprintf("The %dnd test was difficult.\n", j))
+  }
+}
+```
+
+```{r}
+for (i in 1:nrow(student_data)) {
+  highest_score <- student_data[i, 2:5][1]
+  for (j in 2:4) {
+    if (student_data[i, j + 1] > highest_score) {
+      highest_score <- student_data[i, j + 1]
+    }
+  }
+  if (highest_score > 90) {
+    cat(sprintf("%s’s highest grade this semester is %d.\n", student_data$Name[i], highest_score))
+  }
+}
+```
+
+
+
 
 
