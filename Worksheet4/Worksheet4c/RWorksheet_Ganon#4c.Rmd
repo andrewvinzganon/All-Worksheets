@@ -1,0 +1,216 @@
+---
+title: "RWorksheet_Ganon#4c.Rmd"
+author: "Ganon, Andrew Vinz C."
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+#1.
+```{r}
+library(readxl)
+mpg <- read.csv("mpg.csv")
+mpg
+```
+#a. first you need to upload and read the csv file using read.csv
+
+#b. the variables that are categorical are manufacturer, trans, model, trans, drv, fl, and class.
+
+#c. the continuous variables are disp, cty, and hwy
+
+#2.
+```{r}
+manufacture_car <- table(mpg$manufacturer)
+manufacture_car
+
+```
+# the most models are dodge which is 37. 
+
+```{r}
+model_car <- table(mpg$model)
+model_car
+
+# The caravan 2wd with 11 variations has the most.
+```
+
+# a. Group the manufacturers and find the unique models. Show your codes and result.
+
+```{r}
+library("dplyr")
+unique_mod <- mpg %>%
+ group_by(manufacturer) %>%
+ summarise(models = n_distinct(model))
+unique_mod
+```
+
+#b. Graph the result by using plot() and ggplot(). 
+```{r}
+library(ggplot2)
+unique_mod$manufacturer <- as.factor(unique_mod$manufacturer)
+unique_mod$models <- as.numeric(unique_mod$models)
+```
+
+```{r}
+plot(unique_mod$manufacturer, unique_mod$models,
+     type = "p",
+     col = "orange",
+     main = "Number of Unique Models per Manufacturer",
+     xlab = "Manufacturer",
+     ylab = "Unique Model Count",
+     las = 3)
+ggplot(unique_mod, aes(manufacturer, models), y = models) +
+  geom_bar(stat = "identity", fill = "blue", color = "green") +
+  labs(title = "Number of Unique Models per Manufacturer", x = "Manufacturer", y = "Unique Model Count")
+```
+
+# 2.
+```{r}
+library(ggplot2)
+ggplot(unique_mod, aes(manufacturer, models), y = models) +
+  geom_point( color = "gold")
+
+# this had shown the representation of the data using point
+# b. For you, is it useful? If not, how could you modify the data to make it more informative?
+
+# This is quite useful, but if necessary, you can enhance it by transforming the data, summarizing it, using color to categorize, and exploring interactive tools.
+```
+
+#3. Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and its results.
+```{r}
+
+top_mpg <- mpg %>%
+  arrange(desc(mpg)) %>%
+  head(20)
+top_mpg
+ggplot(top_mpg, aes(model,year)) + geom_point()
+```
+#4. Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+```{r}
+car_counted <- mpg %>%
+  group_by(model) %>%        
+  summarise(count = n()) %>% 
+  arrange(desc(count))     
+
+# Display the result
+car_counted
+```
+# a.  
+```{r}
+ggplot(car_counted, aes(x = model, y = count)) +
+  geom_bar(stat = "identity", fill = "red", color = "blue") +
+  labs(title = "Top 20 Observations", x = "Model", y = "Count of Cars")
+```
+#b. 
+```{r}
+ggplot(car_counted, aes(x = model, y = count)) +
+  geom_bar(stat = "identity", fill = "red", color = "blue") +
+  labs(title = "Top 20 Observations", x = "Model", y = "Count of Cars") +
+  coord_flip()
+```
+#5.
+
+```{r}
+library("ggplot2")
+ggplot(mpg, aes(x = displ, y = cyl, color = displ)) + geom_point(size = 3) +  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders (cyl)",
+       y = "Engine Displacement (displ)")
+```
+
+#6. Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). 
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = cyl)) +
+  geom_point(size = 3) +  
+  labs(title = "Relationship between Engine Displacement and Highway MPG",
+       x = "Engine Displacement (displ)",
+       y = "Highway MPG (hwy)")
+```
+# 6. Import the traffic.csv onto your R environment.
+```{r}
+traffic <- read.csv("traffic.csv")
+```
+
+
+```{r}
+str(traffic)
+# The dataset contains 48,120 observations and 4 variables: DateTime, Junction, Vehicles, and ID.
+```
+# b. subset the traffic dataset into junctions. What is the R codes and its output?
+```{r}
+junction <- split(traffic, traffic$Junction)
+
+```
+# c. Plot each junction in a using geom_line(). Show your solution and output.
+```{r, error=TRUE}
+traffic$DateTime <- as.POSIXct(traffic$DateTime, format = "%Y-%m-%d %H:%M:%S")
+
+# Plot each junction using geom_line() and facet_wrap()
+ggplot(traffic, aes(x = DateTime, y = Vehicles)) +
+  geom_line(color = "blue") +
+  labs(title = "Traffic Volume Over Time at Each Junction",
+       x = "DateTime",
+       y = "Number of Vehicles") +
+  facet_wrap(~ Junction)  
+
+```
+# 7.
+```{r}
+alexa <- read.csv("alexa_file.csv")
+```
+```{r}
+str(alexa)
+ncol(alexa)
+# There are 3150 observations and 5 columns in alexafile
+
+```
+#b. group the variations and get the total of each variations. Use the dplyr package. Show solution and answer.
+```{r}
+print(colnames(alexa))
+
+variation_totals <- alexa %>%
+ group_by(variation) %>%
+  summarise(total = n())
+variation_totals
+```
+# c. 
+```{r}
+library("ggplot2")
+ggplot(alexa, aes(x = date, y = variation)) +
+geom_point() + labs(title = "Variations over Time", x = "Date", y = "Variation", color = "Verified")
+```
+# d. Plot a geom_line() with the date and the number of verified reviews. Complete the details of the graphs. Show your answer and solution.
+```{r}
+
+alexa$date <- as.Date(alexa$date, format = "%d-%b-%y")
+review_counts <- alexa %>%
+  group_by(date) %>%
+  summarise(review_count = n())
+ggplot(data = review_counts, aes(x = date, y = review_count)) +
+  geom_line(color = "blue", size = 1) +
+  labs(
+    title = "Number of Verified Reviews Over Time",
+    x = "Date",
+    y = "Number of Verified Reviews"
+  ) +
+  theme_minimal()
+```
+#e. 
+```{r}
+variation_ratings <- alexa %>%
+  group_by(variation) %>%
+  summarise(average_rating = mean(rating, na.rm = TRUE)) %>%
+  arrange(desc(average_rating))
+
+
+ggplot(variation_ratings, aes(x = reorder(variation, -average_rating), y = average_rating)) +
+  geom_bar(stat = "identity", fill = "gold") +
+  coord_flip() +  # Flip coordinates for better readability
+  labs(title = "Average Rating by Product Variation",
+       x = "Product Variation",
+       y = "Average Rating") +
+  theme_minimal()
+```
+
+
+
+
+
